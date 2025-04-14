@@ -1,0 +1,297 @@
+.container {
+    padding: 24px 0;
+  }
+  
+  .mobileSelector {
+    display: none;
+    margin-bottom: 20px;
+  }
+  
+  .mobileCoinInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+    padding: 12px;
+    background-color: #1a1a1a;
+    border-radius: 8px;
+  }
+  
+  .coinImageContainer {
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  
+  .coinImage {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+  }
+  
+  .coinName {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .coinSymbol {
+    margin: 0;
+    font-size: 14px;
+    color: #888;
+  }
+  
+  .coinSelect {
+    width: 100%;
+    padding: 12px;
+    background-color: #1a1a1a;
+    color: #fff;
+    border: 1px solid #333;
+    border-radius: 8px;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23888' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    background-size: 16px;
+  }
+  
+  /* Desktop Layout */
+  .desktopLayout {
+    display: flex;
+    gap: 24px;
+  }
+  
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+  }
+  
+  .mainContent {
+    flex: 1;
+  }
+  
+  /* Coin Header */
+  .coinHeader {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .coinBasicInfo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+  
+  .coinHeaderImage {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+  
+  .coinHeaderName {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .coinHeaderSymbol {
+    margin: 0;
+    font-size: 16px;
+    color: #888;
+  }
+  
+  .coinPriceInfo {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .coinPrice {
+    font-size: 32px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0 0 4px 0;
+  }
+  
+  .priceChange {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    font-weight: 500;
+  }
+  
+  .changeIcon {
+    margin-right: 4px;
+  }
+  
+  .timeFrame {
+    margin-left: 8px;
+    color: #888;
+    font-weight: normal;
+  }
+  
+  .positive {
+    color: #10b981;
+  }
+  
+  .negative {
+    color: #ef4444;
+  }
+  
+  .actionButtons {
+    display: flex;
+    gap: 12px;
+  }
+  
+  .buyButton, .sellButton {
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .buyButton {
+    background-color: #f0b90b;
+    color: #000;
+  }
+  
+  .buyButton:hover {
+    background-color: #daa520;
+  }
+  
+  .sellButton {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .sellButton:hover {
+    background-color: #444;
+  }
+  
+  /* Chart Container */
+  .chartContainer {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chartControls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  
+  .chart {
+    height: 400px;
+    width: 100%;
+  }
+  
+  /* Coin Info Grid */
+  .coinInfoGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+  
+  /* States */
+  .loadingContainer, .errorContainer, .noDataMessage, .notFoundContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 200px;
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    padding: 24px;
+    text-align: center;
+  }
+  
+  .loader {
+    width: 40px;
+    height: 40px;
+    border: 4px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top: 4px solid #f0b90b;
+    animation: spin 1s linear infinite;
+    margin-bottom: 16px;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  .retryButton, .backButton {
+    margin-top: 16px;
+    padding: 8px 16px;
+    background-color: #f0b90b;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-weight: 500;
+    cursor: pointer;
+    text-decoration: none;
+    display: inline-block;
+  }
+  
+  .errorContainer {
+    color: #ef4444;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .desktopLayout {
+      flex-direction: column;
+    }
+  
+    .sidebar {
+      display: none;
+    }
+  
+    .mobileSelector {
+      display: block;
+    }
+    
+    .coinInfoGrid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .coinPriceInfo {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    
+    .actionButtons {
+      width: 100%;
+      margin-top: 16px;
+    }
+    
+    .buyButton, .sellButton {
+      flex: 1;
+    }
+    
+    .chart {
+      height: 300px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .chartControls {
+      flex-direction: column;
+    }
+  }

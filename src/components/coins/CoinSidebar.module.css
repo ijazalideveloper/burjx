@@ -1,0 +1,160 @@
+.container {
+    background-color: #1a1a1a;
+    border-radius: 12px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .header {
+    padding: 16px;
+    border-bottom: 1px solid #333;
+  }
+  
+  .title {
+    margin: 0;
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+  }
+  
+  .coinList {
+    flex: 1;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+    scrollbar-width: thin;
+    scrollbar-color: #444 #222;
+  }
+  
+  .coinList::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .coinList::-webkit-scrollbar-track {
+    background: #222;
+  }
+  
+  .coinList::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 6px;
+  }
+  
+  .coinItem {
+    display: flex;
+    justify-content: space-between;
+    padding: 16px;
+    border-bottom: 1px solid #333;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+  }
+  
+  .coinItem:hover {
+    background-color: #2a2a2a;
+  }
+  
+  .activeCoin {
+    background-color: #2a2a2a;
+    border-left: 3px solid #f0b90b;
+  }
+  
+  .coinInfo {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  
+  .coinImageWrapper {
+    width: 32px;
+    height: 32px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  
+  .coinImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .coinImagePlaceholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+  }
+  
+  .coinDetails {
+    overflow: hidden;
+  }
+  
+  .coinSymbol {
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .coinName {
+    color: #888;
+    font-size: 12px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .coinPriceInfo {
+    text-align: right;
+    min-width: 80px;
+  }
+  
+  .coinPrice {
+    color: white;
+    font-weight: 500;
+    font-size: 14px;
+  }
+  
+  .priceChange {
+    font-size: 12px;
+    font-weight: 500;
+  }
+  
+  .positive {
+    color: #10b981;
+  }
+  
+  .negative {
+    color: #ef4444;
+  }
+  
+  .loadingContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 32px;
+    flex: 1;
+  }
+  
+  .loader {
+    width: 32px;
+    height: 32px;
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    border-top: 3px solid #f0b90b;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }

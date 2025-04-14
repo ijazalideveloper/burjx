@@ -1,0 +1,127 @@
+.cardLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  
+  .card {
+    background-color: #1a1a1a;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
+    background-color: #222;
+  }
+  
+  .cardContent {
+    padding: 16px;
+  }
+  
+  .header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 12px;
+  }
+  
+  .imageContainer {
+    width: 40px;
+    height: 40px;
+    margin-right: 12px;
+    flex-shrink: 0;
+  }
+  
+  .coinImage {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .imageFallback {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    background-color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+  }
+  
+  .coinInfo {
+    overflow: hidden;
+  }
+  
+  .symbol {
+    color: white;
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .name {
+    color: #777;
+    font-size: 12px;
+    margin: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  
+  .chartContainer {
+    height: 60px;
+    margin: 12px 0;
+  }
+  
+  .chartPlaceholder {
+    width: 100%;
+    height: 100%;
+    border-radius: 4px;
+    background-size: 100% 100%;
+  }
+  
+  .positive {
+    background-image: linear-gradient(to right, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.3));
+  }
+  
+  .negative {
+    background-image: linear-gradient(to right, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.3));
+  }
+  
+  .footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .price {
+    font-size: 18px;
+    font-weight: 500;
+    color: white;
+  }
+  
+  .change {
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .positiveChange {
+    background-color: rgba(16, 185, 129, 0.2);
+    color: rgb(16, 185, 129);
+  }
+  
+  .negativeChange {
+    background-color: rgba(239, 68, 68, 0.2);
+    color: rgb(239, 68, 68);
+  }

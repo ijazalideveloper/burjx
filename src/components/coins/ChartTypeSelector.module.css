@@ -1,0 +1,58 @@
+.container {
+    display: flex;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .typeButton {
+    display: flex;
+    align-items: center;
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .typeButton:hover {
+    color: #fff;
+    background-color: #2a2a2a;
+  }
+  
+  .activeButton {
+    background-color: #f0b90b;
+    color: #000;
+  }
+  
+  .activeButton:hover {
+    background-color: #e6b00b;
+    color: #000;
+  }
+  
+  .icon {
+    width: 16px;
+    height: 16px;
+    margin-right: 8px;
+  }
+  
+  .buttonText {
+    margin-top: 1px;
+  }
+  
+  @media (max-width: 640px) {
+    .buttonText {
+      display: none;
+    }
+    
+    .icon {
+      margin-right: 0;
+    }
+    
+    .typeButton {
+      padding: 8px 12px;
+    }
+  }

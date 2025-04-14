@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    background-color: #222;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  
+  .timeFrameButton {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 14px;
+    font-weight: 500;
+    padding: 8px 16px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+  
+  .timeFrameButton:hover {
+    color: #fff;
+    background-color: #2a2a2a;
+  }
+  
+  .activeButton {
+    background-color: #f0b90b;
+    color: #000;
+  }
+  
+  .activeButton:hover {
+    background-color: #e6b00b;
+    color: #000;
+  }
+  
+  @media (max-width: 640px) {
+    .timeFrameButton {
+      padding: 8px 12px;
+      font-size: 13px;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .container {
+      width: 100%;
+      overflow-x: auto;
+    }
+  }

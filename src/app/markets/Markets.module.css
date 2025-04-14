@@ -1,0 +1,173 @@
+.pageContainer {
+  margin: 0 auto;
+  padding: 24px;
+  max-width: 1280px;
+}
+
+.pageTitle {
+  font-size: 28px;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 24px;
+}
+
+.contentContainer {
+  background-color: #121212;
+  border-radius: 8px;
+  padding: 24px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.headerSection {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.viewToggle {
+  display: flex;
+  gap: 8px;
+}
+
+.toggleButton {
+  padding: 8px;
+  border-radius: 4px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #777;
+  transition: all 0.2s ease;
+}
+
+.toggleButton:hover {
+  color: white;
+}
+
+.activeToggle {
+  background-color: #2a2a2a;
+  color: white;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.errorMessage {
+  background-color: rgba(220, 38, 38, 0.2);
+  color: #ef4444;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.cardsSection,
+.tableSection {
+  margin-bottom: 24px;
+}
+
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.loadMoreButton {
+  background-color: #f0b90b;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 8px 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #e6b00b;
+}
+
+.loadMoreSentinel {
+  height: 40px;
+  width: 100%;
+}
+
+/* Loading state */
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  color: #777;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(50, 50, 50, 0.5);
+  border-top: 4px solid #f0b90b; /* Yellow spinner */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* No data state */
+.noDataContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 200px;
+  color: #777;
+  text-align: center;
+  padding: 24px;
+  border: 1px dashed #444;
+  border-radius: 8px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .headerSection {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .viewToggle {
+    align-self: flex-end;
+  }
+}
+
+.gridSection {
+  margin-bottom: 24px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.toggleButton {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.activeToggle {
+  background-color: #2a2a2a;
+}
