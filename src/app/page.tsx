@@ -1,9 +1,9 @@
-import { redirect } from 'next/navigation';
+import { redirect } from "next/navigation";
 
 export default function Home() {
   // Redirect to markets page
-  redirect('/markets');
-  
+  redirect("/markets");
+
   // This will never be rendered
   return null;
 }
