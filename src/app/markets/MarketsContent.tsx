@@ -1,15 +1,16 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { CategoryTab } from '@/lib/types';
-import MarketTabs from '@/components/coins/MarketTabs';
-import CoinSlider from '@/components/coins/CoinSlider';
-import CoinMarketTable from '@/components/coins/CoinMarketTable';
-import { useCoins } from '@/hooks/useCoins';
-import styles from './Markets.module.css';
+import { useState, useEffect } from "react";
+import { CategoryTab } from "@/lib/types";
+import MarketTabs from "@/components/coins/MarketTabs";
+import CoinSlider from "@/components/coins/CoinSlider";
+import CoinList from "@/components/coins/CoinList";
+import CoinMarketTable from "@/components/coins/CoinMarketTable";
+import { useCoins } from "@/hooks/useCoins";
+import styles from "./Markets.module.css";
 
 export default function MarketsContent() {
-  const [viewMode, setViewMode] = useState<'cards' | 'table'>('cards');
+  const [viewMode, setViewMode] = useState<'cards' | 'grid' | 'table'>('cards');
   
   const {
     coins,
@@ -21,14 +22,16 @@ export default function MarketsContent() {
     changeTab
   } = useCoins('featured');
 
-  console.log("Current coins data:", {
-    coinsLength: coins.length,
-    firstCoin: coins[0],
-    loading,
-    error,
-    hasMore,
-    activeTab
-  });
+  // Log data for debugging
+  useEffect(() => {
+    if (coins.length > 0) {
+      console.log("Sample coin data:", {
+        firstCoin: coins[0],
+        price: coins[0].current_price,
+        priceChange: coins[0].price_change_percentage_24h
+      });
+    }
+  }, [coins]);
 
   return (
     <div className={styles.pageContainer}>
@@ -42,19 +45,40 @@ export default function MarketsContent() {
             <button
               onClick={() => setViewMode('cards')}
               className={`${styles.toggleButton} ${viewMode === 'cards' ? styles.activeToggle : ''}`}
-              aria-label="Card view"
+              aria-label="Slider view"
+              title="Slider View"
             >
-              <svg className={styles.icon} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5 3a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2V5a2 2 0 00-2-2H5zM5 11a2 2 0 00-2 2v2a2 2 0 002 2h2a2 2 0 002-2v-2a2 2 0 00-2-2H5zM11 5a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V5zM11 13a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path>
+              <svg className={styles.icon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+              </svg>
+            </button>
+            <button
+              onClick={() => setViewMode('grid')}
+              className={`${styles.toggleButton} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
+              aria-label="Grid view"
+              title="Grid View"
+            >
+              <svg className={styles.icon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5Z" stroke="currentColor" strokeWidth="2"/>
+                <path d="M9 21V3" stroke="currentColor" strokeWidth="2"/>
+                <path d="M15 21V3" stroke="currentColor" strokeWidth="2"/>
+                <path d="M3 9H21" stroke="currentColor" strokeWidth="2"/>
+                <path d="M3 15H21" stroke="currentColor" strokeWidth="2"/>
               </svg>
             </button>
             <button
               onClick={() => setViewMode('table')}
               className={`${styles.toggleButton} ${viewMode === 'table' ? styles.activeToggle : ''}`}
               aria-label="Table view"
+              title="Table View"
             >
-              <svg className={styles.icon} fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                <path fillRule="evenodd" d="M5 4a3 3 0 00-3 3v6a3 3 0 003 3h10a3 3 0 003-3V7a3 3 0 00-3-3H5zm-1 9v-1h5v2H5a1 1 0 01-1-1zm7 1h4a1 1 0 001-1v-1h-5v2zm0-4h5V8h-5v2zM9 8H4v2h5V8z" clipRule="evenodd"></path>
+              <svg className={styles.icon} viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M3 5C3 3.89543 3.89543 3 5 3H19C20.1046 3 21 3.89543 21 5V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5Z" stroke="currentColor" strokeWidth="2"/>
+                <path d="M3 9H21" stroke="currentColor" strokeWidth="2"/>
+                <path d="M3 15H21" stroke="currentColor" strokeWidth="2"/>
               </svg>
             </button>
           </div>
@@ -62,7 +86,13 @@ export default function MarketsContent() {
         
         {error && (
           <div className={styles.errorMessage}>
-            Error: {error}
+            <p>Error: {error}</p>
+            <button 
+              onClick={() => window.location.reload()}
+              className={styles.retryButton}
+            >
+              Retry
+            </button>
           </div>
         )}
         
@@ -75,7 +105,7 @@ export default function MarketsContent() {
         )}
         
         {/* No data state */}
-        {!loading && coins.length === 0 && (
+        {!loading && coins.length === 0 && !error && (
           <div className={styles.noDataContainer}>
             <p>No cryptocurrency data available at the moment.</p>
           </div>
@@ -83,20 +113,27 @@ export default function MarketsContent() {
         
         {/* Cards View with Slider */}
         {coins.length > 0 && viewMode === 'cards' && (
-          <div className={styles.cardsSection}>
+          <div className={styles.viewSection}>
             <CoinSlider coins={coins} loading={loading} />
+          </div>
+        )}
+
+        {/* Grid View */}
+        {coins.length > 0 && viewMode === 'grid' && (
+          <div className={styles.viewSection}>
+            <CoinList coins={coins} loading={loading} hasMore={hasMore} onLoadMore={loadMore} />
           </div>
         )}
         
         {/* Table View */}
         {coins.length > 0 && viewMode === 'table' && (
-          <div className={styles.tableSection}>
+          <div className={styles.viewSection}>
             <CoinMarketTable coins={coins} loading={loading} />
           </div>
         )}
         
-        {/* Load More Button (only for table view) */}
-        {hasMore && !loading && viewMode === 'table' && coins.length > 0 && (
+        {/* Load More Button (only for grid and table views) */}
+        {hasMore && !loading && (viewMode === 'grid' || viewMode === 'table') && (
           <div className={styles.loadMoreContainer}>
             <button 
               onClick={loadMore}
@@ -105,31 +142,6 @@ export default function MarketsContent() {
               Load More
             </button>
           </div>
-        )}
-
-        {/* Infinite scroll sentinel for card view */}
-        {hasMore && viewMode === 'cards' && !loading && coins.length > 0 && (
-          <div 
-            className={styles.loadMoreSentinel}
-            ref={(el) => {
-              if (!el) return;
-              
-              const observer = new IntersectionObserver(
-                (entries) => {
-                  if (entries[0].isIntersecting) {
-                    loadMore();
-                  }
-                },
-                { threshold: 0.5 }
-              );
-              
-              observer.observe(el);
-              
-              return () => {
-                observer.disconnect();
-              };
-            }}
-          />
         )}
       </div>
     </div>

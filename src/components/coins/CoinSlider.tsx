@@ -1,6 +1,6 @@
-'use client';
+"use client";
 
-import { useRef, useState, useEffect, useCallback } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { Coin } from '@/lib/types';
 import CoinCard from './CoinCard';
 import styles from './CoinSlider.module.css';
@@ -14,101 +14,113 @@ export default function CoinSlider({ coins, loading }: CoinSliderProps) {
   const sliderRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(true);
+  const [scrollPosition, setScrollPosition] = useState(0);
 
-  // Handle scroll position to determine which arrows to show
-  const updateArrows = useCallback(() => {
+  // Function to check if arrows should be shown
+  const updateArrows = () => {
     if (!sliderRef.current) return;
     
     const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
-    setShowLeftArrow(scrollLeft > 0);
-    setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10); // -10 for buffer
-  }, []);
+    setScrollPosition(scrollLeft);
+    setShowLeftArrow(scrollLeft > 10); // Show left arrow if scrolled right
+    setShowRightArrow(scrollLeft + clientWidth < scrollWidth - 10); // Show right arrow if more content to the right
+  };
 
-  // Update arrows on initial render and resize
+  // Update arrows on initial render, resize, and when coins change
   useEffect(() => {
     updateArrows();
     window.addEventListener('resize', updateArrows);
-    return () => window.removeEventListener('resize', updateArrows);
-  }, [updateArrows]);
+    
+    return () => {
+      window.removeEventListener('resize', updateArrows);
+    };
+  }, [coins]);
 
-  // Add scroll event listener
+  // Handle scroll events
   useEffect(() => {
     const slider = sliderRef.current;
     if (slider) {
-      slider.addEventListener('scroll', updateArrows, { passive: true });
+      slider.addEventListener('scroll', updateArrows);
       return () => slider.removeEventListener('scroll', updateArrows);
     }
-  }, [updateArrows]);
-
-  // Update arrows when coins change
-  useEffect(() => {
-    updateArrows();
-  }, [coins, updateArrows]);
+  }, []);
 
   // Scroll functions
   const scrollLeft = () => {
-    if (sliderRef.current) {
-      const container = sliderRef.current;
-      const cardWidth = container.querySelector('div')?.clientWidth || 260;
-      container.scrollBy({ left: -cardWidth, behavior: 'smooth' });
-    }
+    if (!sliderRef.current) return;
+    
+    const container = sliderRef.current;
+    const scrollAmount = 300; // Scroll by 300px or one card width
+    container.scrollBy({
+      left: -scrollAmount,
+      behavior: 'smooth'
+    });
   };
 
   const scrollRight = () => {
-    if (sliderRef.current) {
-      const container = sliderRef.current;
-      const cardWidth = container.querySelector('div')?.clientWidth || 260;
-      container.scrollBy({ left: cardWidth, behavior: 'smooth' });
-    }
+    if (!sliderRef.current) return;
+    
+    const container = sliderRef.current;
+    const scrollAmount = 300; // Scroll by 300px or one card width
+    container.scrollBy({
+      left: scrollAmount,
+      behavior: 'smooth'
+    });
   };
+
+  if (coins.length === 0 && !loading) {
+    return <div className={styles.noData}>No cryptocurrencies available</div>;
+  }
 
   return (
     <div className={styles.sliderContainer}>
-      {/* Left Arrow */}
+      {/* Left Navigation Arrow */}
       {showLeftArrow && (
         <button 
           onClick={scrollLeft}
-          className={styles.arrowButton + ' ' + styles.leftArrow}
+          className={`${styles.navButton} ${styles.leftButton}`}
           aria-label="Scroll left"
+          type="button"
         >
-          <svg className={styles.arrowIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M15 19L8 12L15 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
       )}
       
-      {/* Right Arrow */}
+      {/* Slider Content */}
+      <div 
+        ref={sliderRef}
+        className={styles.slider}
+        data-testid="coin-slider"
+      >
+        {coins.map((coin) => (
+          <div key={coin.id} className={styles.slide}>
+            <CoinCard coin={coin} />
+          </div>
+        ))}
+        
+        {/* Loading indicator */}
+        {loading && (
+          <div className={styles.loaderSlide}>
+            <div className={styles.loader}></div>
+          </div>
+        )}
+      </div>
+      
+      {/* Right Navigation Arrow */}
       {showRightArrow && (
         <button 
           onClick={scrollRight}
-          className={styles.arrowButton + ' ' + styles.rightArrow}
+          className={`${styles.navButton} ${styles.rightButton}`}
           aria-label="Scroll right"
+          type="button"
         >
-          <svg className={styles.arrowIcon} fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M9 5L16 12L9 19" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
       )}
-      
-      {/* Scrollable Container */}
-      <div 
-        ref={sliderRef}
-        className={styles.scrollContainer}
-      >
-        <div className={styles.cardsContainer}>
-          {coins.map((coin) => (
-            <div key={coin.id} className={styles.cardWrapper}>
-              <CoinCard coin={coin} />
-            </div>
-          ))}
-          
-          {loading && (
-            <div className={styles.loadingContainer}>
-              <div className={styles.loadingSpinner}></div>
-            </div>
-          )}
-        </div>
-      </div>
     </div>
   );
 }

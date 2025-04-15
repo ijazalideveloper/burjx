@@ -1,21 +1,21 @@
 .pageContainer {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 24px;
-  max-width: 1280px;
 }
 
 .pageTitle {
-  font-size: 28px;
+  font-size: 32px;
   font-weight: 700;
   color: white;
   margin-bottom: 24px;
 }
 
 .contentContainer {
-  background-color: #121212;
-  border-radius: 8px;
+  background-color: rgb(25, 25, 25);
+  border-radius: 12px;
   padding: 24px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .headerSection {
@@ -29,25 +29,33 @@
 
 .viewToggle {
   display: flex;
-  gap: 8px;
+  background-color: rgb(35, 35, 35);
+  border-radius: 8px;
+  padding: 4px;
+  gap: 4px;
 }
 
 .toggleButton {
-  padding: 8px;
-  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background: transparent;
   border: none;
-  cursor: pointer;
   color: #777;
+  border-radius: 6px;
+  cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .toggleButton:hover {
   color: white;
+  background-color: rgba(255, 255, 255, 0.1);
 }
 
 .activeToggle {
-  background-color: #2a2a2a;
+  background-color: #333;
   color: white;
 }
 
@@ -62,40 +70,14 @@
   padding: 16px;
   border-radius: 8px;
   margin-bottom: 24px;
+  text-align: center;
 }
 
-.cardsSection,
-.tableSection {
+.viewSection {
   margin-bottom: 24px;
+  min-height: 280px; /* Minimum height to prevent layout jumps */
 }
 
-.loadMoreContainer {
-  display: flex;
-  justify-content: center;
-  margin-top: 24px;
-}
-
-.loadMoreButton {
-  background-color: #f0b90b;
-  color: black;
-  border: none;
-  border-radius: 4px;
-  padding: 8px 16px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.loadMoreButton:hover {
-  background-color: #e6b00b;
-}
-
-.loadMoreSentinel {
-  height: 40px;
-  width: 100%;
-}
-
-/* Loading state */
 .loadingContainer {
   display: flex;
   flex-direction: column;
@@ -116,15 +98,10 @@
 }
 
 @keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
 
-/* No data state */
 .noDataContainer {
   display: flex;
   justify-content: center;
@@ -137,37 +114,60 @@
   border-radius: 8px;
 }
 
-/* Responsive adjustments */
+.loadMoreContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.loadMoreButton {
+  background-color: #f0b90b;
+  color: black;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.loadMoreButton:hover {
+  background-color: #e6b00b;
+}
+
+.retryButton {
+  background-color: #f0b90b;
+  color: black;
+  border: none;
+  border-radius: 4px;
+  padding: 6px 12px;
+  margin-top: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .headerSection {
     flex-direction: column;
     align-items: flex-start;
   }
-
+  
   .viewToggle {
     align-self: flex-end;
   }
 }
 
-.gridSection {
-  margin-bottom: 24px;
-}
-
-.icon {
-  width: 20px;
-  height: 20px;
-}
-
-.toggleButton {
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 4px;
-  transition: all 0.2s ease;
-}
-
-.activeToggle {
-  background-color: #2a2a2a;
+@media (max-width: 480px) {
+  .pageContainer {
+    padding: 16px;
+  }
+  
+  .contentContainer {
+    padding: 16px;
+  }
+  
+  .pageTitle {
+    font-size: 24px;
+  }
 }

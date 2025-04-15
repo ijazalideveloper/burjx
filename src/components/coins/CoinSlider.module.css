@@ -1,160 +1,113 @@
-.container {
-    background-color: #1a1a1a;
-    border-radius: 12px;
-    overflow: hidden;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.sliderContainer {
+  position: relative;
+  width: 100%;
+  padding: 0 20px; /* Space for navigation buttons */
+  margin: 0 -8px; /* Adjust for button position */
+}
+
+.slider {
+  display: flex;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE and Edge */
+  padding: 8px 0;
+  gap: 16px;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.slider::-webkit-scrollbar {
+  display: none;
+}
+
+.slide {
+  flex: 0 0 280px; /* Fixed width for each card */
+  max-width: 280px;
+  transition: transform 0.3s ease;
+}
+
+.slide:hover {
+  transform: translateY(-5px);
+}
+
+.navButton {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: rgba(40, 40, 40, 0.8);
+  color: white;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease;
+}
+
+.navButton:hover {
+  background-color: rgba(60, 60, 60, 0.9);
+}
+
+.leftButton {
+  left: 0;
+}
+
+.rightButton {
+  right: 0;
+}
+
+.loaderSlide {
+  flex: 0 0 280px;
+  max-width: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid #f0b90b;
+  animation: spin 1s linear infinite;
+}
+
+.noData {
+  width: 100%;
+  padding: 40px 0;
+  text-align: center;
+  color: #666;
+  font-size: 16px;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .slide {
+    flex: 0 0 260px;
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 480px) {
+  .slide {
+    flex: 0 0 240px;
+    max-width: 240px;
   }
   
-  .header {
-    padding: 16px;
-    border-bottom: 1px solid #333;
+  .navButton {
+    width: 36px;
+    height: 36px;
   }
-  
-  .title {
-    margin: 0;
-    font-size: 18px;
-    font-weight: 600;
-    color: #fff;
-  }
-  
-  .coinList {
-    flex: 1;
-    overflow-y: auto;
-    max-height: calc(100vh - 200px);
-    scrollbar-width: thin;
-    scrollbar-color: #444 #222;
-  }
-  
-  .coinList::-webkit-scrollbar {
-    width: 6px;
-  }
-  
-  .coinList::-webkit-scrollbar-track {
-    background: #222;
-  }
-  
-  .coinList::-webkit-scrollbar-thumb {
-    background-color: #444;
-    border-radius: 6px;
-  }
-  
-  .coinItem {
-    display: flex;
-    justify-content: space-between;
-    padding: 16px;
-    border-bottom: 1px solid #333;
-    text-decoration: none;
-    transition: background-color 0.2s ease;
-  }
-  
-  .coinItem:hover {
-    background-color: #2a2a2a;
-  }
-  
-  .activeCoin {
-    background-color: #2a2a2a;
-    border-left: 3px solid #f0b90b;
-  }
-  
-  .coinInfo {
-    display: flex;
-    align-items: center;
-    overflow: hidden;
-  }
-  
-  .coinImageWrapper {
-    width: 32px;
-    height: 32px;
-    margin-right: 12px;
-    flex-shrink: 0;
-  }
-  
-  .coinImage {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    object-fit: cover;
-  }
-  
-  .coinImagePlaceholder {
-    width: 100%;
-    height: 100%;
-    border-radius: 50%;
-    background-color: #333;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    font-weight: bold;
-    font-size: 14px;
-  }
-  
-  .coinDetails {
-    overflow: hidden;
-  }
-  
-  .coinSymbol {
-    color: white;
-    font-weight: 500;
-    font-size: 14px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .coinName {
-    color: #888;
-    font-size: 12px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .coinPriceInfo {
-    text-align: right;
-    min-width: 80px;
-  }
-  
-  .coinPrice {
-    color: white;
-    font-weight: 500;
-    font-size: 14px;
-  }
-  
-  .priceChange {
-    font-size: 12px;
-    font-weight: 500;
-  }
-  
-  .positive {
-    color: #10b981;
-  }
-  
-  .negative {
-    color: #ef4444;
-  }
-  
-  .loadingContainer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 32px;
-    flex: 1;
-  }
-  
-  .loader {
-    width: 32px;
-    height: 32px;
-    border: 3px solid rgba(255, 255, 255, 0.1);
-    border-radius: 50%;
-    border-top: 3px solid #f0b90b;
-    animation: spin 1s linear infinite;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+}

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Link from 'next/link';
@@ -13,30 +13,34 @@ interface CoinCardProps {
 export default function CoinCard({ coin }: CoinCardProps) {
   const [imageError, setImageError] = useState(false);
   
-  // Better handling of price data
-  const price = typeof coin.current_price === 'number' ? coin.current_price : null;
-  const priceChange = typeof coin.price_change_percentage_24h === 'number' 
-    ? coin.price_change_percentage_24h 
+  // Handle potential missing or invalid data with safe defaults
+  const price = typeof coin.current_price === 'number' && !isNaN(coin.current_price) 
+    ? coin.current_price 
     : null;
   
+  const priceChange = typeof coin.price_change_percentage_24h === 'number' && !isNaN(coin.price_change_percentage_24h)
+    ? coin.price_change_percentage_24h
+    : null;
+  
+  // Determine if price change is positive
   const priceChangeIsPositive = priceChange !== null ? priceChange >= 0 : true;
   
-  // Format price with proper fallback
+  // Format price with proper fallback and handling
   const formattedPrice = price !== null
     ? new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
         minimumFractionDigits: 2,
-        maximumFractionDigits: 6
+        maximumFractionDigits: price < 1 ? 6 : 2, // Use more decimals for small amounts
       }).format(price)
-    : 'N/A';
+    : '$0.00';
   
-  // Format percentage with proper fallback
+  // Format percentage with proper sign and fallback
   const percentageChangeFormatted = priceChange !== null
-    ? `${priceChange >= 0 ? '+' : ''}${Math.abs(priceChange).toFixed(2)}%`
-    : '0.00%';
+    ? `${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)}%`
+    : '+0.00%';
   
-  // Create a coin initials display as fallback
+  // Initials for fallback image
   const coinInitial = coin?.symbol ? coin.symbol.slice(0, 1).toUpperCase() : '?';
   
   return (
