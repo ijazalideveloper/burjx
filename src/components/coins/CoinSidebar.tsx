@@ -25,7 +25,7 @@ export default function CoinSidebar({ coins, activeCoinId, loading }: CoinSideba
         <div className={styles.coinList}>
           {coins.map((coin) => {
             const isActive = coin.id === activeCoinId;
-            const priceChangeIsPositive = coin.price_change_percentage_24h >= 0;
+            const priceChangeIsPositive = coin.priceChangePercentage24h >= 0;
             
             return (
               <Link 

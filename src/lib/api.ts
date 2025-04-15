@@ -40,7 +40,7 @@ export async function getAllCoins(
     logApiResponse("getAllCoins", responseData);
 
     // Handle different API response formats
-    let coins: Coin[] = [];
+    let coins: any[] = [];
 
     if (Array.isArray(responseData)) {
       // Direct array response
@@ -64,24 +64,29 @@ export async function getAllCoins(
       coins = generateMockCoins(pageSize);
     }
 
-    // Validate and clean the coin data
-    const validCoins = coins
+    // Validate and transform the coin data to match Coin interface
+    const validCoins: Coin[] = coins
       .filter((coin) => coin && typeof coin === "object")
       .map((coin) => ({
-        ...coin,
-        // Ensure required properties have default values
         id: coin.id || `coin-${Math.random().toString(36).substring(2, 9)}`,
         name: coin.name || "Unknown Coin",
         symbol: coin.symbol || "???",
-        current_price: isNaN(coin.current_price) ? 0 : coin.current_price,
-        price_change_percentage_24h: isNaN(coin.price_change_percentage_24h)
+        image: coin.image || "",
+        // Transform snake_case to camelCase properties to match Coin interface
+        currentPrice: isNaN(coin.current_price) ? 0 : coin.current_price,
+        priceChangePercentage24h: isNaN(coin.price_change_percentage_24h)
           ? 0
           : coin.price_change_percentage_24h,
-        market_cap: isNaN(coin.market_cap) ? 0 : coin.market_cap,
-        total_volume: isNaN(coin.total_volume) ? 0 : coin.total_volume,
-        circulating_supply: isNaN(coin.circulating_supply)
+        marketCap: isNaN(coin.market_cap) ? 0 : coin.market_cap,
+        tradingVolume: isNaN(coin.total_volume) ? 0 : coin.total_volume,
+        circulatingSupply: isNaN(coin.circulating_supply)
           ? 0
           : coin.circulating_supply,
+        // Include additional properties that might be needed
+        marketCapRank: isNaN(coin.market_cap_rank) ? 0 : coin.market_cap_rank,
+        ath: isNaN(coin.ath) ? 0 : coin.ath,
+        athDate: coin.ath_date || "",
+        lastUpdated: coin.last_updated || new Date().toISOString(),
       }));
 
     return { data: validCoins, success: true };
@@ -256,10 +261,8 @@ export async function getTopGainers(
 
     // Sort by price change percentage (descending) and take the top 'limit' coins
     const sortedCoins = [...data]
-      .filter((coin) => !isNaN(coin.price_change_percentage_24h))
-      .sort(
-        (a, b) => b.price_change_percentage_24h - a.price_change_percentage_24h
-      )
+      .filter((coin) => !isNaN(coin.priceChangePercentage24h))
+      .sort((a, b) => b.priceChangePercentage24h - a.priceChangePercentage24h)
       .slice(0, limit);
 
     if (sortedCoins.length === 0) {
@@ -294,10 +297,8 @@ export async function getTopLosers(
 
     // Sort by price change percentage (ascending) and take the top 'limit' coins
     const sortedCoins = [...data]
-      .filter((coin) => !isNaN(coin.price_change_percentage_24h))
-      .sort(
-        (a, b) => a.price_change_percentage_24h - b.price_change_percentage_24h
-      )
+      .filter((coin) => !isNaN(coin.priceChangePercentage24h))
+      .sort((a, b) => a.priceChangePercentage24h - b.priceChangePercentage24h)
       .slice(0, limit);
 
     if (sortedCoins.length === 0) {
@@ -347,8 +348,8 @@ export async function getTopCoins(
     const validData = response.data
       .filter((coin) => coin && typeof coin === "object")
       .sort((a, b) => {
-        const rankA = isNaN(a.market_cap_rank) ? Infinity : a.market_cap_rank;
-        const rankB = isNaN(b.market_cap_rank) ? Infinity : b.market_cap_rank;
+        const rankA = isNaN(a.marketCapRank) ? Infinity : a.marketCapRank;
+        const rankB = isNaN(b.marketCapRank) ? Infinity : b.marketCapRank;
         return rankA - rankB;
       })
       .slice(0, limit);
@@ -372,7 +373,7 @@ export async function getTopCoins(
 // Mock data generation for fallback
 
 function generateMockCoins(count: number): Coin[] {
-  const coins = [
+  const coinTemplates = [
     {
       id: "bitcoin",
       name: "Bitcoin",
@@ -426,40 +427,24 @@ function generateMockCoins(count: number): Coin[] {
   ];
 
   return Array.from({ length: count }, (_, i) => {
-    const basePrice = 1000 + Math.random() * 50000; // More realistic price range
-    const priceChange = Math.random() * 10 - 5; // -5% to +5%
-    const template = coins[i % coins.length];
-
-    // Generate sparkline data
-    const sparklinePrices = Array.from({ length: 24 }, () => {
-      return basePrice * (0.95 + Math.random() * 0.1); // +/- 5% of basePrice
-    });
+    const basePrice = 1000 + Math.random() * 50000;
+    const priceChange = Math.random() * 10 - 5;
+    const template = coinTemplates[i % coinTemplates.length];
 
     return {
-      ...template,
-      id: template.id + (i >= coins.length ? `-${i}` : ""),
-      current_price: basePrice,
-      price_change_percentage_24h: priceChange,
-      price_change_24h: basePrice * (priceChange / 100),
-      market_cap: basePrice * 1000000,
-      market_cap_rank: i + 1,
-      market_cap_change_24h: basePrice * 10000 * (Math.random() * 2 - 1),
-      market_cap_change_percentage_24h: Math.random() * 10 - 5,
-      total_volume: basePrice * 100000,
-      circulating_supply: 1000000 + i * 1000000,
-      total_supply: 21000000,
-      max_supply: 21000000,
+      id: template.id + (i >= coinTemplates.length ? `-${i}` : ""),
+      name: template.name,
+      symbol: template.symbol,
+      image: template.image,
+      currentPrice: basePrice,
+      priceChangePercentage24h: priceChange,
+      marketCap: basePrice * 1000000,
+      marketCapRank: i + 1,
+      tradingVolume: basePrice * 100000,
+      circulatingSupply: 1000000 + i * 1000000,
       ath: basePrice * 1.5,
-      ath_change_percentage: -10,
-      ath_date: "2021-11-10T14:24:11.849Z",
-      atl: basePrice * 0.1,
-      atl_change_percentage: 1000,
-      atl_date: "2013-07-06T00:00:00.000Z",
-      fully_diluted_valuation: basePrice * 21000000,
-      high_24h: basePrice * 1.05,
-      low_24h: basePrice * 0.95,
-      last_updated: new Date().toISOString(),
-      sparkline_in_7d: { price: sparklinePrices },
+      athDate: "2021-11-10T14:24:11.849Z",
+      lastUpdated: new Date().toISOString(),
     };
   });
 }
@@ -467,22 +452,22 @@ function generateMockCoins(count: number): Coin[] {
 function generateMockGainers(count: number): Coin[] {
   return generateMockCoins(count).map((coin) => ({
     ...coin,
-    price_change_percentage_24h: Math.random() * 30 + 5, // 5% to 35%
+    priceChangePercentage24h: Math.random() * 30 + 5, // 5% to 35%
   }));
 }
 
 function generateMockLosers(count: number): Coin[] {
   return generateMockCoins(count).map((coin) => ({
     ...coin,
-    price_change_percentage_24h: -(Math.random() * 30 + 5), // -5% to -35%
+    priceChangePercentage24h: -(Math.random() * 30 + 5), // -5% to -35%
   }));
 }
 
 function generateMockTopCoins(count: number): Coin[] {
   return generateMockCoins(count).map((coin, i) => ({
     ...coin,
-    market_cap_rank: i + 1,
-    market_cap: 1000000000000 / (i + 1),
+    marketCapRank: i + 1,
+    marketCap: 1000000000000 / (i + 1),
   }));
 }
 

@@ -27,8 +27,8 @@ export default function MarketsContent() {
     if (coins.length > 0) {
       console.log("Sample coin data:", {
         firstCoin: coins[0],
-        price: coins[0].current_price,
-        priceChange: coins[0].price_change_percentage_24h
+        price: coins[0].currentPrice,
+        priceChange: coins[0].priceChangePercentage24h
       });
     }
   }, [coins]);

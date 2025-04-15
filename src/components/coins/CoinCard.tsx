@@ -18,8 +18,8 @@ export default function CoinCard({ coin }: CoinCardProps) {
     console.log("Coin data received:", coin);
   }, [coin]);
   
-  const rawPrice = coin.current_price || coin.currentPrice;
-  const rawPriceChange = coin.price_change_percentage_24h || coin.priceChangePercentage24h;
+  const rawPrice = coin.currentPrice || coin.currentPrice;
+  const rawPriceChange = coin.priceChangePercentage24h || coin.priceChangePercentage24h;
   
   // Convert the price and percentage change to numbers explicitly
   const price = parseFloat(String(rawPrice));

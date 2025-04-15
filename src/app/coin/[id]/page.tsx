@@ -62,13 +62,13 @@ export default function CoinDetailsPage() {
         
         // Get related coins (e.g., top 10 by market cap)
         const topCoins = [...allCoins]
-          .sort((a, b) => (a.market_cap_rank || Infinity) - (b.market_cap_rank || Infinity))
+          .sort((a, b) => (a.marketCapRank || Infinity) - (b.marketCapRank || Infinity))
           .slice(0, 10);
         setRelatedCoins(topCoins);
         
         // Some APIs require numeric IDs instead of string identifiers
         // Try to find the numeric ID from the coin object
-        const numericId = currentCoin.market_cap_rank || 1;
+        const numericId = currentCoin.marketCapRank || 1;
         
         // Fetch OHLC data for the chart, try different ID formats
         console.log(`Fetching chart data with ID: ${coinId}, numericId: ${numericId}, days: ${timeFrameToDays[timeFrame]}`);
@@ -100,7 +100,7 @@ export default function CoinDetailsPage() {
         setError(err instanceof Error ? err.message : 'An error occurred');
         
         // Generate mock chart data as fallback
-        const mockPriceChange = coin?.price_change_percentage_24h || 0;
+        const mockPriceChange = coin?.priceChangePercentage24h || 0;
         setChartData(generateMockChartData(timeFrameToDays[timeFrame] as number, mockPriceChange >= 0));
       } finally {
         setLoading(false);
@@ -121,8 +121,8 @@ export default function CoinDetailsPage() {
   };
 
   // Calculate price change
-  const priceChangeIsPositive: boolean = coin?.price_change_percentage_24h !== undefined 
-  ? coin.price_change_percentage_24h >= 0 
+  const priceChangeIsPositive: boolean = coin?.priceChangePercentage24h !== undefined 
+  ? coin.priceChangePercentage24h >= 0 
   : true; // Default to positive if no data
 
   // Generate mock chart data for fallback
@@ -130,7 +130,7 @@ export default function CoinDetailsPage() {
     const numDays = typeof days === 'string' ? 180 : Number(days);
     const points = numDays * 24; // hourly data points
     const now = Date.now();
-    const basePrice = coin?.current_price || 10000;
+    const basePrice = coin?.currentPrice || 10000;
     const volatility = basePrice * 0.05;
     
     return Array.from({ length: points }, (_, i) => {
@@ -285,17 +285,17 @@ export default function CoinDetailsPage() {
               <div className={styles.coinInfoGrid}>
                 <CoinInfoCard
                   title="Market Cap"
-                  value={`$${coin.market_cap?.toLocaleString() || 'N/A'}`}
-                  change={coin?.market_cap_change_percentage_24h}
+                  value={`$${coin.marketCap?.toLocaleString() || 'N/A'}`}
+                  change={coin?.priceChangePercentage24h}
                 />
                 <CoinInfoCard
                   title="Volume (24h)"
-                  value={`$${coin.total_volume?.toLocaleString() || 'N/A'}`}
+                  value={`$${coin.tradingVolume?.toLocaleString() || 'N/A'}`}
                 />
                 <CoinInfoCard
                   title="Circulating Supply"
-                  value={`${coin.circulating_supply?.toLocaleString() || 'N/A'} ${coin.symbol?.toUpperCase()}`}
-                  secondaryValue={coin.max_supply ? `Max: ${coin.max_supply.toLocaleString()}` : undefined}
+                  value={`${coin.circulatingSupply?.toLocaleString() || 'N/A'} ${coin.symbol?.toUpperCase()}`}
+                  // secondaryValue={coin.max_supply ? `Max: ${coin.max_supply.toLocaleString()}` : undefined}
                 />
               </div>
             </>

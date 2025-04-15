@@ -15,7 +15,7 @@ type SortKey = keyof Coin | null;
 type SortDirection = 'asc' | 'desc';
 
 export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps) {
-  const [sortKey, setSortKey] = useState<SortKey>('market_cap_rank');
+  const [sortKey, setSortKey] = useState<SortKey>('marketCap');
   const [sortDir, setSortDir] = useState<SortDirection>('asc');
 
   const handleSort = (key: keyof Coin) => {
@@ -67,29 +67,29 @@ export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps
           <tr>
             <th
               className={styles.tableHeader}
-              onClick={() => handleSort('market_cap_rank')}
+              onClick={() => handleSort('marketCapRank')}
             >
               <div className={styles.headerContent}>
                 <span>Market Name</span>
-                {renderSortIcon('market_cap_rank')}
+                {renderSortIcon('marketCapRank')}
               </div>
             </th>
             <th
               className={styles.tableHeader}
-              onClick={() => handleSort('market_cap')}
+              onClick={() => handleSort('marketCap')}
             >
               <div className={styles.headerContent}>
                 <span>Market Cap</span>
-                {renderSortIcon('market_cap')}
+                {renderSortIcon('marketCap')}
               </div>
             </th>
             <th
               className={styles.tableHeader}
-              onClick={() => handleSort('total_volume')}
+              onClick={() => handleSort('tradingVolume')}
             >
               <div className={styles.headerContent}>
                 <span>Trading Volume</span>
-                {renderSortIcon('total_volume')}
+                {renderSortIcon('tradingVolume')}
               </div>
             </th>
             <th className={styles.tableHeader}>24h Chart</th>
@@ -104,11 +104,11 @@ export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps
             </th>
             <th
               className={styles.tableHeader}
-              onClick={() => handleSort('price_change_percentage_24h')}
+              onClick={() => handleSort('priceChangePercentage24h')}
             >
               <div className={styles.headerContent}>
                 <span>24h Change</span>
-                {renderSortIcon('price_change_percentage_24h')}
+                {renderSortIcon('priceChangePercentage24h')}
               </div>
             </th>
             <th className={`${styles.tableHeader} ${styles.centerCell}`}>Trade</th>
@@ -151,7 +151,7 @@ export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps
                     </div>
                   </td>
                   <td className={styles.tableCell}>
-                    ${coin.marketCap?.toLocaleString() || 'N/A'}
+                    ${coin?.marketCap?.toLocaleString() || 'N/A'}
                   </td>
                   <td className={styles.tableCell}>
                     ${coin.tradingVolume?.toLocaleString() || 'N/A'}
