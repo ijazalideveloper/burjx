@@ -1,5 +1,7 @@
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
+[Demo Link](https://burjx-xz8m.vercel.app/)
+
 ## Getting Started
 
 First, run the development server:
@@ -34,3 +36,8 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+
+<img width="1422" alt="image" src="https://github.com/user-attachments/assets/9da1a2f0-7d0c-4013-8387-6ebcd801381c" />
+<img width="1435" alt="image" src="https://github.com/user-attachments/assets/89deb745-79a4-4a35-b6c7-514a14ba313f" />
+<img width="1412" alt="image" src="https://github.com/user-attachments/assets/715f1c02-ae6e-458f-b0a1-da2af2d70fea" />
