@@ -286,7 +286,7 @@ export default function CoinDetailsPage() {
                 <CoinInfoCard
                   title="Market Cap"
                   value={`$${coin.market_cap?.toLocaleString() || 'N/A'}`}
-                  change={coin.marketCap}
+                  change={coin?.market_cap_change_percentage_24h || coin?.marketCap}
                 />
                 <CoinInfoCard
                   title="Volume (24h)"
