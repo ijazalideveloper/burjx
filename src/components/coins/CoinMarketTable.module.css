@@ -120,7 +120,10 @@
   
   .miniChart {
     width: 100px;
-    height: 40px;
+    flex-grow: 1;
+    border-radius: 8px;
+    overflow: hidden;
+    min-height: 30px; /* Ensure minimum height for the chart */
   }
   
   .chartPlaceholder {

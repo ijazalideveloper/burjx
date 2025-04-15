@@ -75,6 +75,7 @@ export default function CoinDetailsPage() {
         try {
           // First try with string ID
           const { data: ohlcData, success: ohlcSuccess } = await getCoinOHLC(coinId, timeFrameToDays[timeFrame] as number);
+          console.log("ohlcDataohlcData", ohlcData)
           if (!ohlcSuccess || !ohlcData || ohlcData.length === 0) {
             throw new Error('First attempt failed');
           }
@@ -227,14 +228,14 @@ export default function CoinDetailsPage() {
                 <div className={styles.coinPriceInfo}>
                   <div>
                     <p className={styles.coinPrice}>
-                      ${coin.current_price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
+                      ${coin.currentPrice?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 })}
                     </p>
                     <div className={`${styles.priceChange} ${priceChangeIsPositive ? styles.positive : styles.negative}`}>
                       <span className={styles.changeIcon}>
                         {priceChangeIsPositive ? '↑' : '↓'}
                       </span>
                       <span>
-                        {Math.abs(coin.price_change_percentage_24h).toFixed(2)}%
+                        {Math.abs(coin.priceChangePercentage24h).toFixed(2)}%
                       </span>
                       <span className={styles.timeFrame}>24h</span>
                     </div>
@@ -285,7 +286,7 @@ export default function CoinDetailsPage() {
                 <CoinInfoCard
                   title="Market Cap"
                   value={`$${coin.market_cap?.toLocaleString() || 'N/A'}`}
-                  change={coin.market_cap_change_percentage_24h}
+                  change={coin.marketCap}
                 />
                 <CoinInfoCard
                   title="Volume (24h)"

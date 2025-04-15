@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Coin } from '@/lib/types';
 import styles from './CoinCard.module.css';
@@ -13,20 +13,23 @@ interface CoinCardProps {
 export default function CoinCard({ coin }: CoinCardProps) {
   const [imageError, setImageError] = useState(false);
   
-  // Handle potential missing or invalid data with safe defaults
-  const price = typeof coin.current_price === 'number' && !isNaN(coin.current_price) 
-    ? coin.current_price 
-    : null;
+  // Debug the incoming coin data
+  useEffect(() => {
+    console.log("Coin data received:", coin);
+  }, [coin]);
   
-  const priceChange = typeof coin.price_change_percentage_24h === 'number' && !isNaN(coin.price_change_percentage_24h)
-    ? coin.price_change_percentage_24h
-    : null;
+  const rawPrice = coin.current_price || coin.currentPrice;
+  const rawPriceChange = coin.price_change_percentage_24h || coin.priceChangePercentage24h;
+  
+  // Convert the price and percentage change to numbers explicitly
+  const price = parseFloat(String(rawPrice));
+  const priceChange = parseFloat(String(rawPriceChange));
   
   // Determine if price change is positive
-  const priceChangeIsPositive = priceChange !== null ? priceChange >= 0 : true;
+  const priceChangeIsPositive = !isNaN(priceChange) ? priceChange >= 0 : true;
   
   // Format price with proper fallback and handling
-  const formattedPrice = price !== null
+  const formattedPrice = !isNaN(price)
     ? new Intl.NumberFormat('en-US', {
         style: 'currency',
         currency: 'USD',
@@ -36,8 +39,8 @@ export default function CoinCard({ coin }: CoinCardProps) {
     : '$0.00';
   
   // Format percentage with proper sign and fallback
-  const percentageChangeFormatted = priceChange !== null
-    ? `${priceChange >= 0 ? '+' : ''}${priceChange.toFixed(2)}%`
+  const percentageChangeFormatted = !isNaN(priceChange)
+    ? `${priceChange >= 0 ? '+' : ''}${Math.abs(priceChange).toFixed(2)}%`
     : '+0.00%';
   
   // Initials for fallback image

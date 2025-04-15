@@ -1,4 +1,6 @@
 export interface Coin {
+    currentPrice: number;
+    priceChangePercentage24h: number;
     id: string;
     symbol: string;
     name: string;

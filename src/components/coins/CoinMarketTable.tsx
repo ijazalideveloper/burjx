@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { Coin } from '@/lib/types';
 import styles from './CoinMarketTable.module.css';
+import SimpleGraph from './SimpleGraph';
 
 interface CoinMarketTableProps {
   coins: Coin[];
@@ -94,11 +95,11 @@ export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps
             <th className={styles.tableHeader}>24h Chart</th>
             <th
               className={styles.tableHeader}
-              onClick={() => handleSort('current_price')}
+              onClick={() => handleSort('currentPrice')}
             >
               <div className={styles.headerContent}>
                 <span>Price</span>
-                {renderSortIcon('current_price')}
+                {renderSortIcon('currentPrice')}
               </div>
             </th>
             <th
@@ -124,7 +125,7 @@ export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps
             </tr>
           ) : (
             sortedCoins.map((coin) => {
-              const priceChangeIsPositive = coin.price_change_percentage_24h >= 0;
+              const priceChangeIsPositive = coin.priceChangePercentage24h >= 0;
               
               return (
                 <tr key={coin.id} className={styles.tableRow}>
@@ -150,24 +151,24 @@ export default function CoinMarketTable({ coins, loading }: CoinMarketTableProps
                     </div>
                   </td>
                   <td className={styles.tableCell}>
-                    ${coin.market_cap?.toLocaleString() || 'N/A'}
+                    ${coin.marketCap?.toLocaleString() || 'N/A'}
                   </td>
                   <td className={styles.tableCell}>
-                    ${coin.total_volume?.toLocaleString() || 'N/A'}
+                    ${coin.tradingVolume?.toLocaleString() || 'N/A'}
                   </td>
                   <td className={styles.tableCell}>
                     <div className={styles.miniChart}>
                       <div 
                         className={`${styles.chartPlaceholder} ${priceChangeIsPositive ? styles.positiveChart : styles.negativeChart}`}
-                      ></div>
+                      ><SimpleGraph trend={priceChangeIsPositive ? 'up' : 'down'} height={60} /></div>
                     </div>
                   </td>
                   <td className={`${styles.tableCell} ${styles.priceCell}`}>
-                    ${coin.current_price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) || 'N/A'}
+                    ${coin.currentPrice?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) || 'N/A'}
                   </td>
                   <td className={`${styles.tableCell} ${priceChangeIsPositive ? styles.positiveChange : styles.negativeChange}`}>
                     {priceChangeIsPositive ? '+' : ''}
-                    {coin.price_change_percentage_24h?.toFixed(2)}%
+                    {coin.priceChangePercentage24h?.toFixed(2)}%
                   </td>
                   <td className={`${styles.tableCell} ${styles.centerCell}`}>
                     <Link 

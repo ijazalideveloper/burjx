@@ -54,10 +54,10 @@ export default function CoinSidebar({ coins, activeCoinId, loading }: CoinSideba
                 </div>
                 <div className={styles.coinPriceInfo}>
                   <div className={styles.coinPrice}>
-                    ${coin.current_price?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) || 'N/A'}
+                    ${coin.currentPrice?.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 6 }) || 'N/A'}
                   </div>
                   <div className={`${styles.priceChange} ${priceChangeIsPositive ? styles.positive : styles.negative}`}>
-                    {priceChangeIsPositive ? '+' : ''}{coin.price_change_percentage_24h?.toFixed(2)}%
+                    {priceChangeIsPositive ? '+' : ''}{coin.priceChangePercentage24h?.toFixed(2)}%
                   </div>
                 </div>
               </Link>
