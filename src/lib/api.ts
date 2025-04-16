@@ -73,12 +73,12 @@ export async function getAllCoins(
         symbol: coin.symbol || "???",
         image: coin.image || "",
         // Transform snake_case to camelCase properties to match Coin interface
-        currentPrice: isNaN(coin.current_price) ? 0 : coin.current_price,
-        priceChangePercentage24h: isNaN(coin.price_change_percentage_24h)
+        currentPrice: isNaN(coin.currentPrice) ? 0 : coin.currentPrice,
+        priceChangePercentage24h: isNaN(coin.priceChangePercentage24h)
           ? 0
-          : coin.price_change_percentage_24h,
-        marketCap: isNaN(coin.market_cap) ? 0 : coin.market_cap,
-        tradingVolume: isNaN(coin.total_volume) ? 0 : coin.total_volume,
+          : coin.priceChangePercentage24h,
+        marketCap: isNaN(coin.marketCap) ? 0 : coin.marketCap,
+        tradingVolume: isNaN(coin.tradingVolume) ? 0 : coin.tradingVolume,
         circulatingSupply: isNaN(coin.circulating_supply)
           ? 0
           : coin.circulating_supply,
@@ -329,6 +329,7 @@ export async function getTopCoins(
 
     // Directly use getAllCoins to fetch coins
     const response = await getAllCoins(1, limit, currency);
+    console.log(">>>>>>>>>>>>>>>", response)
 
     // Check if we got a successful response with data
     if (
